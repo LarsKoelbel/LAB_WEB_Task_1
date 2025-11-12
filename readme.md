@@ -1,0 +1,3 @@
+# Aufgabe 1 - Börsensimultion
+
+TODO: https://docs.google.com/spreadsheets/d/1CxcLCbYhtj1ikY5NmRFeNbCt2C8-SNiLXOdxtp0h1hQ/edit?usp=sharing

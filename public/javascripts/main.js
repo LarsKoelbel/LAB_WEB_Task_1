@@ -1,3 +1,5 @@
+"use strict";
+
 // GLOBAL
 
 const SERVER_BASE_URL = "http://localhost:3333";        // Without trailing slash!
@@ -6,7 +8,7 @@ const LOGGING = {
     warn: true,
     error: true
 }
-const DYNAMIC_UI_UPDATE_INTERVAL_IN_MS = 5000;
+const DYNAMIC_UI_UPDATE_INTERVAL_IN_MS = 500;
 
 let BALANCE_START = null;
 
@@ -131,6 +133,8 @@ class Stock
     }
 }
 
+const GLOBAL_STOCK_TRENDS = new Map();
+
 class News
 {
     constructor(timestamp, time, text)
@@ -254,6 +258,63 @@ async function sellStock(stock, amount = 1)
     }
 }
 
+// Send a message to one or more players
+async function sendMessage()
+{
+    // Get the recipient ad message
+    const recipient = document.getElementById("input-text-plain-recipient").value;
+    const text = document.getElementById("input-text-plain-message").value;
+
+    // Check the input
+    if (recipient === "")
+    {
+        alert("Please enter a valid recipient");
+        return;
+    }
+    if (text === "")
+    {
+        alert("Please enter a valid message");
+        return;
+    }
+
+    document.getElementById("input-text-plain-recipient").value = "";
+    document.getElementById("input-text-plain-message").value = "";
+
+    // Split for multiple recipients
+    const recipients = recipient.split(",");
+
+    recipients.forEach(async (recipient) => {
+        // Send the message
+        try
+        {
+            // Make a post request to the server
+            const response = await fetch(SERVER_BASE_URL + "/api/messages", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    recipient: recipient,
+                    message: text
+                })
+            })
+
+            // Check response
+            if (!response.ok) {
+                if (response.status === 422) alert(`Cant send message: ${(await response.json()).error}`);
+                else alert(`Could not send message: ${response.statusText} (${response.status})`);
+            }
+
+            // Update all dynamic ui immediately to make sure all changes are visible
+            uiUpdateDynamic();
+
+        }catch (exception)
+        {
+            alert("Sending the message failed: " + exception.message);
+        }
+    })
+}
+
 // Get methods
 
 // Get the current user as a object of type user
@@ -361,6 +422,76 @@ async function getMessages(n)
 
 // ########### MAIN UI ###############
 
+async function drawLineGraph()
+{
+    const canvas = document.getElementById('lineGraph');
+    const ctx = canvas.getContext('2d');
+
+
+    // Clear the canvas before redrawing
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const colors = [
+        'red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet',
+        'pink', 'cyan', 'magenta', 'lime', 'teal', 'brown', 'gray'
+    ];
+
+    const data = []
+    let i = 0
+    GLOBAL_STOCK_TRENDS.forEach((trend, name) => {
+        data.push({color: colors[i%colors.length], points:trend, label: name});
+        i++;
+    })
+
+    // Find the range for scaling
+    const allX = data.flatMap(line => line.points.map(p => p.x));
+    const allY = data.flatMap(line => line.points.map(p => p.y));
+    const minX = Math.min(...allX), maxX = Math.max(...allX);
+    const minY = Math.min(...allY), maxY = Math.max(...allY);
+
+    // Convert data points to canvas coordinates
+    function toCanvasX(x) {
+        return ((x - minX) / (maxX - minX)) * canvas.width;
+    }
+    function toCanvasY(y) {
+        return canvas.height - ((y - minY) / (maxY - minY)) * canvas.height;
+    }
+
+    // Draw each line
+    data.forEach(line => {
+        ctx.beginPath();
+        ctx.strokeStyle = line.color;
+
+        line.points.forEach((point, i) => {
+            const cx = toCanvasX(point.x);
+            const cy = toCanvasY(point.y);
+            if (i === 0) ctx.moveTo(cx, cy);
+            else ctx.lineTo(cx, cy);
+        });
+        ctx.stroke();
+
+        // Draw label near the last point of the line
+        const padding = 10; // pixels
+
+        const lastPoint = line.points[line.points.length - 1];
+        if (lastPoint) {
+            let labelX = toCanvasX(lastPoint.x) + 5; // right of last point
+            let labelY = toCanvasY(lastPoint.y);
+
+            // Keep label inside canvas boundaries
+            if (labelX + 115 > canvas.width) labelX = canvas.width - 115; // adjust right edge
+            if (labelY - 7 < 0) labelY = 7; // top padding
+            if (labelY + 7 > canvas.height) labelY = canvas.height - 7; // bottom padding
+
+            ctx.fillStyle = line.color;
+            ctx.font = "14px Arial";
+            ctx.textBaseline = "middle";
+            ctx.fillText(line.label, labelX, labelY);
+        }
+    });
+
+}
+
 // Shows all stocks owned by the user
 async function buildAccountList()
 {
@@ -445,6 +576,18 @@ async function buildFullMarketList()
                     buyStock(stock, amount);
                 })
             }
+        })
+
+        const timestamp = Date.now();
+        // Store values in global trends
+        stocks.forEach((stock) => {
+            if(GLOBAL_STOCK_TRENDS.has(stock.name))
+            {
+                GLOBAL_STOCK_TRENDS.get(stock.name).push({x:timestamp, y:stock.price});
+                // Make sure the list does not get to long
+                GLOBAL_STOCK_TRENDS.set(stock.name, GLOBAL_STOCK_TRENDS.get(stock.name).slice(-100));
+            }
+            else GLOBAL_STOCK_TRENDS.set(stock.name, [{x:timestamp, y:stock.price}]);
         })
 
     }catch (exception)
@@ -601,10 +744,23 @@ async function uiUpdateDynamic()
     // Update the user messages
     buildMessages();
 
+    // Redraw the line graph
+    drawLineGraph();
+
+}
+
+async function initButtons()
+{
+    document.getElementById("button-message-send").addEventListener("click", () => {
+        sendMessage();
+    })
 }
 
 async function init()
 {
+    // Init all buttons
+    initButtons();
+
     // Update all static fields on login
     uiUpdateStatic();
 

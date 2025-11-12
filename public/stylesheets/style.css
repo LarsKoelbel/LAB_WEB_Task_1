@@ -18,3 +18,10 @@ a {
 .message-incoming {
     background-color: #ff0000;
 }
+
+canvas {
+    border: 1px solid black;
+    display: block;
+    margin: 20px auto;
+    text-align: right;
+}
