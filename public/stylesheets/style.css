@@ -10,3 +10,11 @@ a {
 .grey-out{
         background: #ff0000;
 }
+
+.message-outgoing {
+    background-color: #7aff00;
+}
+
+.message-incoming {
+    background-color: #ff0000;
+}

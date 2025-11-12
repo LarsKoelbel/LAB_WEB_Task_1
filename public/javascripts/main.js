@@ -11,6 +11,7 @@ const DYNAMIC_UI_UPDATE_INTERVAL_IN_MS = 5000;
 let BALANCE_START = null;
 
 let BALANCE = 0;
+let USERNAME = "";
 
 // Util
 
@@ -143,6 +144,24 @@ class News
         const element = document.createElement("p");
         element.classList.add("news-element");
         element.innerHTML = `${this.time} | ${this.text}`;
+        return element;
+    }
+}
+
+class Message
+{
+    constructor(date, sender, recipient, text)
+    {
+        this.date = date;
+        this.sender = sender;
+        this.text = text;
+        this.recipient = recipient;
+    }
+    get htmlRepresentation()
+    {
+        const element = document.createElement("p");
+        element.classList.add("message-element");
+        element.innerHTML = `From: "${this.sender}" to "${this.recipient}" | ${this.text}`;
         return element;
     }
 }
@@ -321,6 +340,25 @@ async function getNews(n)
     throw new ServerException("Unable to get news data", packet.message);
 }
 
+// Get the last n messages
+async function getMessages(n)
+{
+    const packet = await getRequestToServe("/api/messages?lastTime=0000000000000");
+    if(packet.ok)
+    {
+        //Build a list of all available messages
+        const messages = [];
+        let json = await packet.payload.json();
+        // Get only the last n
+        json = json.slice(-n)
+        json.forEach(message => messages.push(new Message(message.date, message.sender, message.recipient, message.text)));
+        Log.log(`Available message list is ${messages}`);                  // @Jenkins line-remove-on-publish
+        return messages;
+    }
+    Log.log(`Messages fetch failed`);                  // @Jenkins line-remove-on-publish
+    throw new ServerException("Unable to get Messages", packet.message);
+}
+
 // ########### MAIN UI ###############
 
 // Shows all stocks owned by the user
@@ -466,6 +504,40 @@ async function buildNews()
     }
 }
 
+// Create the message feed
+async function buildMessages()
+{
+    try
+    {
+        const messages = await getMessages(20);
+        messages.sort((a, b) => b.date - a.date);
+        Log.log(`Messages are ${messages}`);              // @Jenkins line-remove-on-publish
+
+        // Get the messenger div
+        const env = document.getElementById("div-area-messages-environment");
+        // Remove all existing children
+        env.innerHTML = "";                                     // TODO: Find a better way to update the list | low
+        messages.forEach((message) => {
+            const html = message.htmlRepresentation;
+            if (message.sender === USERNAME)
+            {
+                html.classList.add("message-outgoing")
+            }else
+            {
+                html.classList.add("message-incoming")
+            }
+            env.appendChild(html);
+        })
+
+    }catch (exception)
+    {
+        if (exception instanceof ServerException)
+        {
+            alert("Failed to load leaderboard form server: " + exception.userMessage);
+        }
+    }
+}
+
 
 // Update the static fields in the main ui
 // static == fields that are not expected to change at a regular interval
@@ -477,6 +549,7 @@ async function uiUpdateStatic()
         const user = await getUser();
 
         document.getElementById("test-plain-user-name").innerText = user.name;
+        USERNAME = user.name;
 
     }catch (exception)
     {
@@ -520,10 +593,13 @@ async function uiUpdateDynamic()
     buildFullMarketList();
 
     // Update user account data
-    buildAccountList()
+    buildAccountList();
 
     // Update the news feed
-    buildNews()
+    buildNews();
+
+    // Update the user messages
+    buildMessages();
 
 }
 
