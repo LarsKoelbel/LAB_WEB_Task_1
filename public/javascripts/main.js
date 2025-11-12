@@ -8,6 +8,8 @@ const LOGGING = {
 }
 const DYNAMIC_UI_UPDATE_INTERVAL_IN_MS = 5000;
 
+let BALANCE_START = null;
+
 let BALANCE = 0;
 
 // Util
@@ -118,6 +120,23 @@ class Stock
         element.appendChild(this.sell);
         element.appendChild(this.sellAmount);
         element.appendChild(this.sellAll);
+        return element;
+    }
+}
+
+class News
+{
+    constructor(timestamp, time, text)
+    {
+        this.timestamp = timestamp;
+        this.time = time;
+        this.text = text;
+    }
+    get htmlRepresentation()
+    {
+        const element = document.createElement("p");
+        element.classList.add("news-element");
+        element.innerHTML = `${this.time} | ${this.text}`;
         return element;
     }
 }
@@ -267,6 +286,25 @@ async function getUserStocks()
     throw new ServerException("Unable to get account data", packet.message);
 }
 
+// Get the last n news messages
+async function getNews(n)
+{
+    const packet = await getRequestToServe("/api/news?lastTime=0000000000000");
+    if(packet.ok)
+    {
+        //Build a list of all available news messages
+        const news = [];
+        let json = await packet.payload.json();
+        // Get only the last n
+        json = json.slice(-n)
+        json.forEach(message => news.push(new News(message.timestamp, message.time, message.text)));
+        Log.log(`Available news list is ${news}`);                  // @Jenkins line-remove-on-publish
+        return news;
+    }
+    Log.log(`News fetch failed`);                  // @Jenkins line-remove-on-publish
+    throw new ServerException("Unable to get news data", packet.message);
+}
+
 // ########### MAIN UI ###############
 
 // Shows all stocks owned by the user
@@ -388,6 +426,31 @@ async function buildLeaderboard()
     }
 }
 
+// Create the news feed
+async function buildNews()
+{
+    try
+    {
+        const news = await getNews(20);
+        news.sort((a, b) => b.timestamp - a.timestamp);
+        Log.log(`News is ${news}`);              // @Jenkins line-remove-on-publish
+
+        // Get the leaderboard div
+        const env = document.getElementById("div-area-news-environment");
+        // Remove all existing children
+        env.innerHTML = "";                                     // TODO: Find a better way to update the list | low
+        news.forEach((message) => env.appendChild(message.htmlRepresentation));
+
+    }catch (exception)
+    {
+        if (exception instanceof ServerException)
+        {
+            alert("Failed to load leaderboard form server: " + exception.userMessage);
+        }
+    }
+}
+
+
 // Update the static fields in the main ui
 // static == fields that are not expected to change at a regular interval
 async function uiUpdateStatic()
@@ -437,6 +500,9 @@ async function uiUpdateDynamic()
 
     // Update user account data
     buildAccountList()
+
+    // Update the news feed
+    buildNews()
 
 }
 
