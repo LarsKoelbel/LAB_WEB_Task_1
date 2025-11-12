@@ -97,8 +97,11 @@ class Stock
         element.classList.add("stock-market-element");
         this.buy = document.createElement("button");
         this.buy.innerText = "Buy";
+        this.buyAmount = document.createElement("button");
+        this.buyAmount.innerText = "Buy amount";
         element.innerHTML = `${this.name} | ${this.price} | ${this.number} | `;
         element.appendChild(this.buy);
+        element.appendChild(this.buyAmount);
         return element;
     }
     get htmlRepresentationUserList()
@@ -121,6 +124,40 @@ class ServerException extends Error
         super(message);
         this.userMessage = userMessage;
         this.name = "ServerError";
+    }
+}
+
+// Set methods (POST)
+
+async function buyStock(stock, amount = 1)
+{
+    try
+    {
+        // Make a post request to the server
+        const response = await fetch(SERVER_BASE_URL + "/api/account/positions", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                stock: {
+                    name: stock.name
+                },
+                number: amount
+            })
+        })
+
+        // Check response
+        if (!response.ok) {
+            if (response.status === 422) alert(`Cant buy stock ${stock.name}: ${(await response.json()).error}`);
+            else alert(`Could not buy stock ${stock.name}: ${response.statusText}`);
+        }
+
+        // Update all dynamic ui immediately to make sure all changes are visible
+        uiUpdateDynamic();
+    }catch (exception)
+    {
+        alert("Buying the stock failed: " + exception.message);
     }
 }
 
@@ -250,6 +287,18 @@ async function buildFullMarketList()
             if (stock.price > BALANCE)
             {
                 stock.buy.classList.add("grey-out");
+                stock.buyAmount.classList.add("grey-out")
+            }
+            else
+            {
+                stock.buy.addEventListener("click", () => {
+                    buyStock(stock);
+                })
+                stock.buyAmount.addEventListener("click", () => {
+                    const amount = parseInt(prompt("Please enter desired purchase amount"));
+                    if(isNaN(amount)) {alert("Purchase amount is invalid"); return;}
+                    buyStock(stock, amount);
+                })
             }
         })
 

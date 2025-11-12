@@ -6,3 +6,7 @@ body {
 a {
   color: #00B7FF;
 }
+
+.grey-out{
+        background: #ff0000;
+}
