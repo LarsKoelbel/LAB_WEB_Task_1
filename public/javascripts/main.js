@@ -8,6 +8,8 @@ const LOGGING = {
 }
 const DYNAMIC_UI_UPDATE_INTERVAL_IN_MS = 5000;
 
+let BALANCE = 0;
+
 // Util
 
 // @Jenkins start-block-remove-on-publish
@@ -79,6 +81,27 @@ class ServerPacket
     }
 }
 
+// Class representing a single stock
+class Stock
+{
+    constructor(name, price, number)
+    {
+        this.name = name;
+        this.price = price;
+        this.number = number;
+    }
+    get htmlRepresentation()
+    {
+        const element = document.createElement("p");
+        element.classList.add("stock-market-element");
+        this.buy = document.createElement("button");
+        this.buy.innerText = "Buy";
+        element.innerHTML = `${this.name} | ${this.price} | ${this.number} | `;
+        element.appendChild(this.buy);
+        return element;
+    }
+}
+
 // Error during server communication
 class ServerException extends Error
 {
@@ -123,8 +146,55 @@ async function getAllUsers()
     throw new ServerException("Unable to get user", packet.message);
 }
 
+async function getAllStocks()
+{
+    const packet = await getRequestToServe("/api/stocks");
+    if(packet.ok)
+    {
+        //Build a list of all available stocks
+        const stocks = [];
+        Log.log(`11111111111111111111111111111111111111111111111`);                  // @Jenkins line-remove-on-publish
+        const json = await packet.payload.json();
+        json.forEach(stock => stocks.push(new Stock(stock.name, stock.price, stock.numberAvailable)));
+        Log.log(`22222222222222222222222222222222222222222222222`);                  // @Jenkins line-remove-on-publish
+        Log.log(`Available stock list is ${stocks}`);                  // @Jenkins line-remove-on-publish
+        Log.log(`33333333333333333333333333333333333333333333333`);                  // @Jenkins line-remove-on-publish
+        return stocks;
+    }
+    Log.log(`Stock market fetch failed`);                  // @Jenkins line-remove-on-publish
+    throw new ServerException("Unable to get stocks", packet.message);
+}
 
 // ########### MAIN UI ###############
+
+async function buildFullMarketList()
+{
+    try
+    {
+        const stocks = await getAllStocks();
+        stocks.sort((a, b) => a.price - b.price);
+        Log.log(`Stockmarket is ${stocks}`);              // @Jenkins line-remove-on-publish
+
+        // Get the stockmarket div
+        const env = document.getElementById("div-area-stockmarket-environment");
+        // Remove all existing children
+        env.innerHTML = "";                                     // TODO: Find a better way to update the list | low
+        stocks.forEach((stock) => {
+            env.appendChild(stock.htmlRepresentation);
+            if (stock.price > BALANCE)
+            {
+                stock.buy.classList.add("grey-out");
+            }
+        })
+
+    }catch (exception)
+    {
+        if (exception instanceof ServerException)
+        {
+            alert("Failed to load stock market list form server: " + exception.userMessage);
+        }
+    }
+}
 
 // Create the current leaderboard
 async function buildLeaderboard()
@@ -181,6 +251,7 @@ async function uiUpdateDynamic()
         const user = await getUser();
 
         document.getElementById("test-plain-balance").innerText = user.balance;
+        BALANCE = user.balance;
 
     }catch (exception)
     {
@@ -192,6 +263,9 @@ async function uiUpdateDynamic()
 
     // Update the leaderboard
     buildLeaderboard();
+
+    // Update the market
+    buildFullMarketList();
 
 }
 
