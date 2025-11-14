@@ -2,24 +2,25 @@
 
 // GLOBAL
 
-const SERVER_BASE_URL = "https://ypdpbec5rmupizpk.myfritz.net/lab-web-a-1/";        // Without trailing slash!
-const LOGGING = {
+//export const SERVER_BASE_URL = "http://localhost:3333";        // Without trailing slash!
+export const SERVER_BASE_URL = "https://ypdpbec5rmupizpk.myfritz.net/lab-web-a-1";        // Without trailing slash!
+export const LOGGING = {
     verbose: true,
     warn: true,
     error: true
 }
-const DYNAMIC_UI_UPDATE_INTERVAL_IN_MS = 500;
+export const DYNAMIC_UI_UPDATE_INTERVAL_IN_MS = 500;
 
-let BALANCE_START = null;
+export let BALANCE_START = null;
 
-let BALANCE = 0;
-let USERNAME = "";
+export let BALANCE = 0;
+export let USERNAME = "";
 
 // Util
 
 // @Jenkins start-block-remove-on-publish
 // Log something to the console
-const Log = Object.freeze({
+export const Log = Object.freeze({
     log(message)
     {
         if (LOGGING.verbose) console.log(message);
@@ -36,7 +37,7 @@ const Log = Object.freeze({
 // @Jenkins end-block-remove-on-publish
 
 // Send a get request to the server
-async function getRequestToServe(endpoint)
+export async function getRequestToServe(endpoint)
 {
     Log.log(`Requesting GET ${endpoint}`);                                  // @Jenkins line-remove-on-publish
     try
@@ -774,5 +775,3 @@ export async function init()
     }
     intervalUpdater();
 }
-
-window.addEventListener("load", init);
