@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="de">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nachrichten – Börsenclient</title>
+    <link rel="stylesheet" href="stylesheets/styles.css" />
+    <script src="javascripts/navigation.js" defer></script>
+</head>
+<body class="page-grid">
+
+<!-- Desktop Header mit Burger Menü -->
+<header id="topbar" aria-label="Hauptnavigation">
+    <div class="logo-area">Nachrichten</div>
+    <button id="burger-menu" class="burger" aria-label="Navigation umschalten">&#9776;</button>
+    <nav id="desktop-nav" class="hidden">
+        <ul>
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="portfolio.html">Depot</a></li>
+            <li><a href="chart.html">Kurse</a></li>
+            <li><a href="leaderboard.html">Rangliste</a></li>
+            <li><a href="messages.html" class="active">Nachrichten</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main id="layout">
+    <!-- Nachricht verfassen -->
+    <section class="card">
+        <h2>Neue Nachricht</h2>
+
+        <div class="form-group">
+            <label>Empfänger auswählen</label>
+            <select id="message-recipients" multiple>
+                <!-- dynamischer Inhalt via JS -->
+                <option>max</option>
+                <option>moritz</option>
+                <option>lempel</option>
+                <option>bolte</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Nachricht</label>
+            <textarea id="message-text" placeholder="Nachricht eingeben..."></textarea>
+        </div>
+
+        <button id="btn-send-message">Senden</button>
+        <div id="message-error" class="error-message"></div>
+    </section>
+
+    <!-- Nachrichtenliste -->
+    <section class="card">
+        <h2>Eingehende Nachrichten</h2>
+        <div id="message-list" class="message-list">
+            <!-- Nachrichten kommen dynamisch hier rein -->
+            <p>Noch keine Nachrichten vorhanden.</p>
+        </div>
+    </section>
+</main>
+
+<!-- Mobile Bottom Navigation -->
+<nav id="mobile-nav" aria-label="Mobile Navigation">
+    <a href="portfolio.html" class="nav-item">
+        <svg width="24" height="24" viewBox="0 0 24 24"><path d="M4 2h2v20H4z M18 2h2v20H18z M6 4h12v2H6z M6 8h12v2H6z M6 12h12v2H6z M6 16h12v2H6z M6 20h12v2H6z" fill="black" transform="rotate(180 12 12)"/></svg>     
+        <span>Depot</span>
+    </a>
+    <a href="chart.html" class="nav-item">
+        <svg width="24" height="24" viewBox="0 0 24 24"><path d="M5 17l4-4 3 3 7-7"/></svg>
+        <span>Kurse</span>
+    </a>
+    <a href="index.html" class="nav-item">
+        <svg width="24" height="24" viewBox="0 0 24 24"><path d="M11 2h2v20h-2z M12 4l-8 2v4l8-2z M12 12l8 2v4l-8-2z" fill="black"/></svg>
+        <span>Dashboard</span>
+    </a>
+    <a href="leaderboard.html" class="nav-item">
+        <svg width="24" height="24" viewBox="0 0 24 24"><path d="M12 2l4 8H8zM2 22h20v-2H2z"/></svg>
+        <span>Ranking</span>
+    </a>
+    <a href="messages.html" class="nav-item">
+        <svg width="24" height="24" viewBox="0 0 24 24"><path d="M3 4h18v14H5l-2 2z"/></svg>
+        <span>Nachrichten</span>
+    </a>
+</nav>
+
+</body>
+</html>

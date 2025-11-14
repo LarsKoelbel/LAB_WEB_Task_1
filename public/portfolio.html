@@ -3,20 +3,20 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard – Börsenclient</title>
+    <title>Depot – Börsenclient</title>
     <link rel="stylesheet" href="stylesheets/styles.css" />
     <script src="javascripts/navigation.js" defer></script>
 </head>
 <body class="page-grid">
+
+<!-- Desktop Header mit Burger Menü -->
 <header id="topbar" aria-label="Hauptnavigation">
-    <div class="logo-area">Dashboard</div>
-    <button id="burger-menu" class="burger" aria-label="Navigation umschalten">
-        &#9776;
-    </button>
+    <div class="logo-area">Depot</div>
+    <button id="burger-menu" class="burger" aria-label="Navigation umschalten">&#9776;</button>
     <nav id="desktop-nav" class="hidden">
         <ul>
-            <li><a href="index.html" class="active">Dashboard</a></li>
-            <li><a href="portfolio.html">Depot</a></li>
+            <li><a href="index.html">Dashboard</a></li>
+            <li><a href="portfolio.html" class="active">Depot</a></li>
             <li><a href="chart.html">Kurse</a></li>
             <li><a href="leaderboard.html">Rangliste</a></li>
             <li><a href="messages.html">Nachrichten</a></li>
@@ -25,16 +25,41 @@
 </header>
 
 <main id="layout">
-    <section class="card dashboard-card">
-        <h1>Willkommen im Dashboard des Börsenclients!</h1>
-        <p>Nutzen Sie das Menü, um Ihr Depot, Kurse, Rangliste oder Nachrichten aufzurufen.</p>
+    <!-- Portfolio Liste -->
+    <section class="card">
+        <h2>Mein Depot</h2>
+        <div id="portfolio-list">
+            <!-- dynamischer Inhalt später via JS/API -->
+            <p>Noch keine Aktien gekauft.</p>
+        </div>
+    </section>
+
+    <!-- Kaufen / Verkaufen -->
+    <section class="card">
+        <h2>Kaufen / Verkaufen</h2>
+        <div class="form-group">
+            <label>Aktien-Symbol</label>
+            <input type="text" id="trade-symbol" placeholder="z. B. AAPL" />
+        </div>
+
+        <div class="form-group">
+            <label>Menge</label>
+            <input type="number" id="trade-amount" min="1" />
+        </div>
+
+        <div class="button-row">
+            <button id="btn-buy">Kaufen</button>
+            <button id="btn-sell">Verkaufen</button>
+        </div>
+
+        <div id="trade-error" class="error-message"></div>
     </section>
 </main>
 
 <!-- Mobile Bottom Navigation -->
 <nav id="mobile-nav" aria-label="Mobile Navigation">
     <a href="portfolio.html" class="nav-item">
-        <svg width="24" height="24" viewBox="0 0 24 24"><path d="M4 2h2v20H4z M18 2h2v20H18z M6 4h12v2H6z M6 8h12v2H6z M6 12h12v2H6z M6 16h12v2H6z M6 20h12v2H6z" fill="black" transform="rotate(180 12 12)"/></svg>          
+        <svg width="24" height="24" viewBox="0 0 24 24"><path d="M4 2h2v20H4z M18 2h2v20H18z M6 4h12v2H6z M6 8h12v2H6z M6 12h12v2H6z M6 16h12v2H6z M6 20h12v2H6z" fill="black" transform="rotate(180 12 12)"/></svg>     
         <span>Depot</span>
     </a>
     <a href="chart.html" class="nav-item">
