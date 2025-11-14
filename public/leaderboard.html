@@ -13,6 +13,8 @@
 <!-- Desktop Header mit Burger Menü -->
 <header id="topbar" aria-label="Hauptnavigation">
     <div class="logo-area">Rangliste</div>
+    <p id="display_name">Lade...</p>
+    <p id="display_balance">Lade...</p>
     <button id="burger-menu" class="burger" aria-label="Navigation umschalten">&#9776;</button>
     <nav id="desktop-nav" class="hidden">
         <ul>
@@ -38,12 +40,10 @@
                 <th>Vermögen</th>
             </tr>
             </thead>
-            <tbody id="leaderboard-body">
+            <tbody id="tr-environment-dynamic-ranking-list">
             <!-- dynamischer Inhalt über API -->
             <tr>
-                <td>1</td>
-                <td>Beispielspieler</td>
-                <td>120.000 €</td>
+                <th>Wird geladen...</th>
             </tr>
             </tbody>
         </table>
@@ -73,6 +73,16 @@
         <span>Nachrichten</span>
     </a>
 </nav>
+
+<!-- Templates -->
+
+<template id="tr-environment-dynamic-ranking-list__element-row-template">
+    <tr class="tr-environment-dynamic-ranking-list__element-row-template">
+        <td class="tr-environment-dynamic-ranking-list__element-row-template__id"></td>
+        <td class="tr-environment-dynamic-ranking-list__element-row-template__username"></td>
+        <td class="tr-environment-dynamic-ranking-list__element-row-template__value"></td>
+    </tr>
+</template>
 
 </body>
 </html>
