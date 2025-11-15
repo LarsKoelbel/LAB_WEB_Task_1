@@ -3,8 +3,11 @@
 import {
     initNavigationBar,
     updateNavigationBar,
-    DYNAMIC_UI_UPDATE_INTERVAL_IN_MS, getAllStocks, hash, GLOBAL_STOCK_TRENDS, getNews, USERNAME
+    DYNAMIC_UI_UPDATE_INTERVAL_IN_MS, getAllStocks, hash, getNews, USERNAME
 } from "./lib.js";
+import {
+    GLOBAL_STOCK_TRENDS
+} from "./engine.js";
 
 let STOCKS_AVAILABLE_NAMES = [];
 

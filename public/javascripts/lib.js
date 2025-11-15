@@ -5,7 +5,7 @@
 export const SERVER_BASE_URL = ".";        // Without trailing slash!
 //export const SERVER_BASE_URL = "https://ypdpbec5rmupizpk.myfritz.net/lab-web-a-1";        // Without trailing slash!
 export const LOGGING = {
-    verbose: true,
+    verbose: false,
     warn: true,
     error: true
 }
@@ -168,7 +168,7 @@ export class Stock
     }
 }
 
-export const GLOBAL_STOCK_TRENDS = new Map();
+
 
 export class News
 {
@@ -444,22 +444,6 @@ export async function getMessages(n)
     }
     Log.log(`Messages fetch failed`);                  // @Jenkins line-remove-on-publish
     throw new ServerException("Unable to get Messages", packet.message);
-}
-
-async function updateGlobalStockTrends()
-{
-    const stockData = await getAllStocks();
-    // Place the data into the global stock trends map
-    const timestamp = Date.now();
-    stockData.forEach(stock => {
-        if (GLOBAL_STOCK_TRENDS.has(stock.name))
-        {
-            GLOBAL_STOCK_TRENDS.get(stock.name).push({x:timestamp,y:stock.price});
-        }else
-        {
-            GLOBAL_STOCK_TRENDS.set(stock.name, [{x:timestamp,y:stock.price}]);
-        }
-    })
 }
 
 // ########### MAIN UI ###############
@@ -817,10 +801,3 @@ export async function init()
     }
     intervalUpdater();
 }
-
-async function startGlobalStockDataPolling()
-{
-    setInterval(updateGlobalStockTrends, DYNAMIC_UI_UPDATE_INTERVAL_IN_MS);
-}
-
-window.addEventListener("load", startGlobalStockDataPolling);
