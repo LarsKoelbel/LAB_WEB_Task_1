@@ -298,32 +298,15 @@ export async function sellStock(stock, amount = 1)
 }
 
 // Send a message to one or more players
-export async function sendMessage()
+export async function sendMessage(recipient, text)
 {
-    // Get the recipient ad message
-    const recipient = document.getElementById("input-text-plain-recipient").value;
-    const text = document.getElementById("input-text-plain-message").value;
-
-    // Check the input
-    if (recipient === "")
-    {
-        alert("Please enter a valid recipient");
-        return;
-    }
-    if (text === "")
-    {
-        alert("Please enter a valid message");
-        return;
-    }
-
-    document.getElementById("input-text-plain-recipient").value = "";
-    document.getElementById("input-text-plain-message").value = "";
-
     // Split for multiple recipients
     const recipients = recipient.split(",");
 
     recipients.forEach(async (recipient) => {
         // Send the message
+        // Skip empty entrys
+        if (recipient === "") return;
         try
         {
             // Make a post request to the server
@@ -365,6 +348,7 @@ export async function getUser()
     {
         const json = await packet.payload.json();
         Log.log(`User data is ${json}`);                  // @Jenkins line-remove-on-publish
+        USERNAME = json.name;
         return new User(json.name, json.balance);
     }
     throw new ServerException("Unable to get user", packet.message);
@@ -757,6 +741,7 @@ export async function uiUpdateDynamic()
 
         document.getElementById("test-plain-balance").innerText = user.balance;
         BALANCE = user.balance;
+        USERNAME = user.name;
         if (BALANCE_START === null) BALANCE_START = user.balance;
 
     }catch (exception)

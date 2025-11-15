@@ -4,7 +4,7 @@ import {
     DYNAMIC_UI_UPDATE_INTERVAL_IN_MS,
     getAllUsers,
     getMessages, hash,
-    initNavigationBar,
+    initNavigationBar, sendMessage,
     updateNavigationBar,
     USERNAME
 } from "./lib.js";
@@ -36,7 +36,7 @@ async function updateMessageDisplay()
         // Instance a new row template
         const clone = template.content.cloneNode(true);
 
-        clone.querySelector(".messages__div-area-list__container__row-template__display-date").textContent = message.date;
+        clone.querySelector(".messages__div-area-list__container__row-template__display-date").textContent = new Date(message.date).toLocaleTimeString();
         clone.querySelector(".messages__div-area-list__container__row-template__display-sender").textContent = message.sender;
         clone.querySelector(".messages__div-area-list__container__row-template__display-text").textContent = message.text;
 
@@ -48,10 +48,10 @@ async function updateMessageDisplay()
         // Assign a class based on message origin
         if (message.sender === USERNAME)
         {
-            userElement.add("messages__div-area-list__container__row-template__style-send-self");
+            userElement.classList.add("messages__div-area-list__container__row-template__style-send-self");
         }else
         {
-            userElement.add("messages__div-area-list__container__row-template__style-send-foreign");
+            userElement.classList.add("messages__div-area-list__container__row-template__style-send-foreign");
         }
 
         frag.appendChild(clone);
@@ -162,9 +162,40 @@ async function updateListOfRecipients()
     env.appendChild(frag);
 }
 
+async function send()
+{
+    // Get the message text
+    const text = document.getElementById("messages__input-message-text").value;
+    if (text === "")
+    {
+        alert("Bitte geben sie eine Nachricht ein.");
+        return;
+    }
+
+    if (RECIPIENTS.length <= 0)
+    {
+        alert("Bitte wählen sie mindestens einen Empfänger aus.");
+        return;
+    }
+
+    // Get all recipients
+    let s = "";
+    RECIPIENTS.forEach((user) => {
+        s += user.name + ",";
+    })
+
+    await sendMessage(s, text);
+
+    // Update ui immediately after
+    contentLoop()
+
+    document.getElementById("messages__input-message-text").value = "";
+}
+
 async function init ()
 {
     initNavigationBar();
+    initClickable();
     startContentLoop();
 
 }
@@ -179,6 +210,13 @@ async function contentLoop()
 async function startContentLoop()
 {
     setInterval(contentLoop, DYNAMIC_UI_UPDATE_INTERVAL_IN_MS);
+}
+
+async function initClickable()
+{
+    document.getElementById("messages__button-send").addEventListener("click", async event => {
+        send();
+    })
 }
 
 window.addEventListener("load", init );

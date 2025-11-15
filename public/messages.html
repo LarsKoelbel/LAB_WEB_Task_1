@@ -39,10 +39,10 @@
 
         <div class="form-group">
             <label>Nachricht</label>
-            <textarea id="message-text" placeholder="Nachricht eingeben..."></textarea>
+            <textarea id="messages__input-message-text" placeholder="Nachricht eingeben..."></textarea>
         </div>
 
-        <button id="btn-send-message">Senden</button>
+        <button id="messages__button-send">Senden</button>
         <div id="message-error" class="error-message"></div>
     </section>
 
@@ -87,9 +87,9 @@
 <div class="messages__div-area-list__container__row-template">
         <!-- Maybe format what's inside here more like a message (WhatsApp etc.)? -->
         <!-- Messages send by the user themselves are additionally assigned the class:
-                ".messages__div-area-list__container__row-template__style-send-self"
+                ".messages__div-area-list__container__row-template__style-send-self" (This class is already present in the stylesheet)
              Messages send by other users are additionally assigned the class:
-                ".messages__div-area-list__container__row-template__style-send-foreign"
+                ".messages__div-area-list__container__row-template__style-send-foreign" (This class is already present in the stylesheet)
              This class is added to the class-list of the element with the class "messages__div-area-list__container__row-template"-->
         <hr>
         <span class="messages__div-area-list__container__row-template__display-date"></span>

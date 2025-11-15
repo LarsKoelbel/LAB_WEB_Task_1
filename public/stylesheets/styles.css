@@ -411,3 +411,13 @@ table th, table td {
 .messages__div-recipient-list__clickable-element__select-deselect-user__template__active {
     background-color: var(--primary);
 }
+
+.messages__div-area-list__container__row-template__style-send-self {
+    background-color: #63ff63;
+    text-align: right;
+}
+
+.messages__div-area-list__container__row-template__style-send-foreign {
+    background-color: var(--primary);
+    text-align: left;
+}
