@@ -22,7 +22,7 @@ async function init ()
 
     // For testing only
     document.getElementById("restart").addEventListener("click", () => {
-        window.open("./supervisor/publicapi/restart-lab-web-a-1");
+        window.open("../supervisor/publicapi/restart-lab-web-a-1");
     });
 
 }
