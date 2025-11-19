@@ -42,7 +42,7 @@
 
 /* Hilfsklasse zum Ausblenden von Elementen */
 .hidden {
-    display: none;
+    display: none; /* Element wird vollständig ausgeblendet */
 }
 
 /* ------------------------------------------------------------
@@ -68,14 +68,16 @@ body {
     min-height: 100vh;
 }
 
-.page-grid > header { grid-area: header; }
-.page-grid > main { grid-area: main; }
-.page-grid > nav#mobile-nav { grid-area: footer; }
+/* Zuordnung der Grid-Bereiche zu den HTML-Elementen */
+.page-grid > header { grid-area: header; } /* Header oben */
+.page-grid > main { grid-area: main; } /* Hauptinhalt in der Mitte */
+.page-grid > nav#mobile-nav { grid-area: footer; } /* Mobile Navigation unten */
 
 /* ------------------------------------------------------------
    SCHALTFLÄCHEN UND FORMULARELEMENTE
    Einheitliches Aussehen für Buttons, Eingabefelder usw.
 ------------------------------------------------------------ */
+/* Standard-Button Styling */
 button {
     background: var(--primary);
     color: white;
@@ -84,18 +86,21 @@ button {
     border-radius: var(--radius);
     cursor: pointer;
     font-size: 1rem;
-    transition: background 0.2s;
+    transition: background 0.2s; /* Sanfte Farbübergänge beim Hover */
 }
+/* Hover-Effekt für Buttons */
 button:hover { background: var(--primary-hover); }
 
+/* Standard-Styling für Eingabefelder */
 input, textarea, select {
     padding: 10px;
     border-radius: var(--radius);
     border: 1px solid var(--border);
-    width: 100%;
+    width: 100%; /* Volle Breite des Containers */
     font-size: 1rem;
 }
 
+/* Textareas können nur vertikal in der Größe angepasst werden */
 textarea { resize: vertical; }
 
 /* Fehlermeldungen unter Eingabefeldern */
@@ -150,23 +155,27 @@ textarea { resize: vertical; }
     z-index: 10; /* bleibt beim Scrollen oben sichtbar */
 }
 
+/* Erstes Element im Header rückt nach links */
 #topbar > *:first-child {
     margin-right: auto;
 }
 
+/* Burger-Menü Button für mobile Navigation */
 .burger {
     font-size: 24px;
-    background: none;
-    border: none;
-    cursor: pointer;
+    background: none; /* Kein Hintergrund */
+    border: none; /* Kein Rahmen */
+    cursor: pointer; /* Zeigt Hand-Cursor beim Darüberfahren */
 }
 
+/* Desktop-Navigation: Liste ohne Aufzählungszeichen, flexibles Layout */
 #desktop-nav ul {
-    list-style: none;
-    display: flex;
-    gap: 16px;
+    list-style: none; /* Keine Aufzählungszeichen */
+    display: flex; /* Horizontale Anordnung */
+    gap: 16px; /* Abstand zwischen den Links */
 }
 
+/* Desktop-Navigation: Links ohne Unterstreichung */
 #desktop-nav a {
     text-decoration: none;
     color: var(--text);
@@ -188,6 +197,7 @@ textarea { resize: vertical; }
     gap: 16px;
 }
 
+/* Labels für Benutzerinformationen (orange Hintergrund) */
 .user-label,
 .balance-label {
     background-color: var(--primary);
@@ -197,10 +207,11 @@ textarea { resize: vertical; }
     font-weight: 500;
 }
 
+/* Werte für Benutzerinformationen (Textfarbe) */
 .user-name,
 .balance-value {
     color: var(--text);
-    margin-left: 4px;
+    margin-left: 4px; /* Abstand zum Label */
 }
 
 /* ------------------------------------------------------------
@@ -221,10 +232,11 @@ textarea { resize: vertical; }
     background: var(--card-bg);
     border-radius: var(--radius);
     padding: 20px;
-    box-shadow: 0 2px 6px var(--shadow);
+    box-shadow: 0 2px 6px var(--shadow); /* Leichter Schatten für Tiefeneffekt */
     border: 1px solid var(--border);
 }
 
+/* Überschriften innerhalb von Cards */
 .card h2 {
     margin-bottom: 10px;
     color: var(--text);
@@ -232,7 +244,7 @@ textarea { resize: vertical; }
 
 .card h3 {
     margin-bottom: 6px;
-    color: var(--text-light);
+    color: var(--text-light); /* Hellere Farbe für Unterüberschriften */
 }
 
 /* ------------------------------------------------------------
@@ -321,6 +333,7 @@ textarea { resize: vertical; }
 }
 
 
+/* Icons in Navigationskarten (orange) */
 .nav-card-icon {
     color: var(--primary);
     margin-bottom: 12px;
@@ -329,12 +342,14 @@ textarea { resize: vertical; }
     justify-content: center;
 }
 
+/* Überschriften in Navigationskarten */
 .nav-card h2 {
     margin-bottom: 8px;
     color: var(--text);
     font-size: 1.5rem;
 }
 
+/* Beschreibungstext in Navigationskarten */
 .nav-card p {
     color: var(--text-light);
     font-size: 0.95rem;
@@ -344,32 +359,37 @@ textarea { resize: vertical; }
 /* ------------------------------------------------------------
    FORMULARHILFEN UND TABELLEN
 ------------------------------------------------------------ */
+/* Container für Formular-Felder mit einheitlichem Abstand */
 .form-group { 
-    margin-bottom: 16px; 
+    margin-bottom: 16px; /* Abstand zwischen Formular-Feldern */
 }
 
+/* Labels für Formularfelder */
 .form-label {
-    display: block;
+    display: block; /* Block-Element für eigene Zeile */
     margin-bottom: 8px;
     font-weight: 500;
     color: var(--text);
 }
 
+/* Horizontale Anordnung von Buttons */
 .button-row { 
-    display: flex; 
-    gap: 10px; 
+    display: flex; /* Flexbox für horizontale Anordnung */
+    gap: 10px; /* Abstand zwischen Buttons */
     margin-top: 16px; 
 }
 
+/* Standard-Tabellen-Styling */
 table {
-    width: 100%;
-    border-collapse: collapse;
+    width: 100%; /* Volle Breite */
+    border-collapse: collapse; /* Zusammenfallende Rahmen */
 }
 
+/* Tabellenzellen: Padding und Rahmen */
 table th, table td {
     padding: 10px;
     text-align: left;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--border); /* Unterer Rahmen für Trennlinien */
 }
 
 /* Ranglisten-Tabelle Styling */
@@ -378,31 +398,37 @@ table th, table td {
     width: 100%;
 }
 
+/* Tabellenkopf mit hellem orangen Hintergrund */
 .ranking-table thead {
-    background-color: rgba(255, 98, 0, 0.1);
+    background-color: rgba(255, 98, 0, 0.1); /* Leicht transparenter Orange-Ton */
 }
 
+/* Tabellenzellen-Kopf: Dickerer unterer Rahmen */
 .ranking-table th {
     padding: 12px;
     font-weight: 600;
     color: var(--text);
     text-align: left;
-    border-bottom: 2px solid var(--primary);
+    border-bottom: 2px solid var(--primary); /* Orange Trennlinie */
 }
 
+/* Tabellenzeilen mit sanfter Hover-Transition */
 .ranking-table tbody tr {
-    transition: background-color 0.2s;
+    transition: background-color 0.2s; /* Farbübergang beim Hover */
 }
 
+/* Hover-Effekt für Tabellenzeilen */
 .ranking-table tbody tr:hover {
-    background-color: rgba(255, 98, 0, 0.05);
+    background-color: rgba(255, 98, 0, 0.05); /* Sehr heller Orange-Ton */
 }
 
+/* Tabellenzellen-Daten */
 .ranking-table td {
     padding: 12px;
     color: var(--text);
 }
 
+/* Letzte Zeile ohne unteren Rahmen */
 .ranking-table tbody tr:last-child td {
     border-bottom: none;
 }
@@ -469,8 +495,10 @@ table th, table td {
     font-size: 0.8rem;
 }
 
+/* Aktives Navigationselement in Primärfarbe */
 .nav-item.active { color: var(--primary); }
-.nav-item svg { margin-bottom: 2px; }
+/* SVG-Icons in Navigationselementen */
+.nav-item svg { margin-bottom: 2px; /* Kleiner Abstand zum Text */ }
 
 /* ------------------------------------------------------------
    RESPONSIVE DESIGN
@@ -502,17 +530,22 @@ table th, table td {
     }
 }
 
-/* Nachrichten-Seite: Empfänger-Checkboxes */
+/* ------------------------------------------------------------
+   NACHRICHTEN-SEITE
+   Styling für Nachrichten, Empfänger-Liste und Formulare
+------------------------------------------------------------ */
+
+/* Liste der verfügbaren Empfänger mit Scrollfunktion */
 .messages__recipient-list {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 8px; /* Abstand zwischen Checkboxen */
     margin-top: 8px;
     /* Max-Höhe für 6 Checkboxes: (Checkbox 20px + Padding 16px) * 6 + 5 Gaps * 8px = 256px */
     max-height: calc(6 * (20px + 16px) + 5 * 8px);
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding-right: 4px;
+    overflow-y: auto; /* Vertikales Scrollen bei Bedarf */
+    overflow-x: hidden; /* Kein horizontales Scrollen */
+    padding-right: 4px; /* Platz für Scrollbar */
 }
 
 /* Scrollbar Styling für Empfängerliste */
@@ -534,133 +567,149 @@ table th, table td {
     background: var(--text-light);
 }
 
+/* Label für Empfänger-Checkboxen (klickbar) */
 .messages__recipient-checkbox-label {
     display: flex;
     align-items: center;
-    cursor: pointer;
+    cursor: pointer; /* Zeigt Hand-Cursor */
     padding: 8px;
     border-radius: var(--radius);
-    transition: background-color 0.2s;
+    transition: background-color 0.2s; /* Sanfter Hover-Effekt */
 }
 
+/* Hover-Effekt für Empfänger-Labels */
 .messages__recipient-checkbox-label:hover {
-    background-color: rgba(255, 98, 0, 0.1);
+    background-color: rgba(255, 98, 0, 0.1); /* Heller Orange-Hintergrund */
 }
 
+/* Custom Checkbox-Styling (ohne Standard-Aussehen) */
 .messages__recipient-checkbox {
-    appearance: none;
+    appearance: none; /* Entfernt Standard-Checkbox-Styling */
     width: 20px;
     height: 20px;
     border: 2px solid var(--border);
     border-radius: 4px;
-    margin-right: 10px;
+    margin-right: 10px; /* Abstand zum Text */
     position: relative;
     cursor: pointer;
-    transition: all 0.2s;
-    flex-shrink: 0;
+    transition: all 0.2s; /* Sanfte Farbübergänge */
+    flex-shrink: 0; /* Verhindert Schrumpfen in Flexbox */
 }
 
+/* Checkbox im markierten Zustand */
 .messages__recipient-checkbox:checked {
-    background-color: var(--primary);
+    background-color: var(--primary); /* Orange Hintergrund */
     border-color: var(--primary);
 }
 
+/* Checkmark-Symbol für markierte Checkbox */
 .messages__recipient-checkbox:checked::after {
     content: '';
     position: absolute;
     left: 50%;
     top: 50%;
-    transform: translate(-50%, -50%) rotate(45deg);
+    transform: translate(-50%, -50%) rotate(45deg); /* Drehung für Häkchen */
     width: 5px;
     height: 10px;
-    border: solid #003366;
+    border: solid #003366; /* Dunkelblaues Häkchen */
     border-width: 0 2px 2px 0;
 }
 
+/* Text neben der Checkbox */
 .messages__recipient-checkbox-text {
     color: var(--text);
     font-size: 1rem;
 }
 
-/* Nachrichten-Formular Styling */
+/* Container für das Nachrichten-Eingabeformular */
 .messages-new-message {
     display: flex;
     flex-direction: column;
 }
 
+/* Textarea für Nachrichteneingabe */
 .messages-new-message textarea {
     width: 100%;
-    min-height: 120px;
+    min-height: 120px; /* Mindesthöhe für Eingabefeld */
     padding: 12px;
     border: 1px solid var(--border);
     border-radius: var(--radius);
     font-size: 1rem;
-    font-family: inherit;
-    resize: vertical;
+    font-family: inherit; /* Verwendet gleiche Schriftart wie Seite */
+    resize: vertical; /* Nur vertikale Größenänderung erlaubt */
 }
 
+/* Focus-Zustand für Textarea (orange Border) */
 .messages-new-message textarea:focus {
     outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(255, 98, 0, 0.1);
+    border-color: var(--primary); /* Orange Rahmen beim Fokussieren */
+    box-shadow: 0 0 0 3px rgba(255, 98, 0, 0.1); /* Heller orange Glow-Effekt */
 }
 
 /* ------------------------------------------------------------
    DEPOT / PORTFOLIO STYLING
 ------------------------------------------------------------ */
 
+/* Liste aller Portfolio-Positionen */
 .portfolio-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 12px; /* Abstand zwischen Portfolio-Zeilen */
     margin-top: 16px;
 }
 
+/* Nachricht, wenn noch keine Aktien gekauft wurden */
 .portfolio-empty-message {
     text-align: center;
     color: var(--text-light);
     padding: 32px;
-    font-style: italic;
+    font-style: italic; /* Kursiv für betonten Hinweis */
 }
 
+/* Einzelne Portfolio-Zeile (Aktienposition) */
 .portfolio-row {
     background: var(--card-bg);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 16px;
-    transition: all 0.2s;
+    transition: all 0.2s; /* Sanfte Übergänge bei Änderungen */
 }
 
-
+/* Portfolio-Zeile mit Gewinn (grüne Markierung) */
 .portfolio-row--profit {
-    background: linear-gradient(to right, rgba(99, 255, 99, 0.1) 0%, var(--card-bg) 5%);
-    border-left: 4px solid #63ff63;
+    background: linear-gradient(to right, rgba(99, 255, 99, 0.1) 0%, var(--card-bg) 5%); /* Grüner Gradient links */
+    border-left: 4px solid #63ff63; /* Grüner linker Rand */
 }
 
+/* Portfolio-Zeile mit Verlust (rote Markierung) */
 .portfolio-row--loss {
-    background: linear-gradient(to right, rgba(255, 67, 67, 0.1) 0%, var(--card-bg) 5%);
-    border-left: 4px solid #ff4343;
+    background: linear-gradient(to right, rgba(255, 67, 67, 0.1) 0%, var(--card-bg) 5%); /* Roter Gradient links */
+    border-left: 4px solid #ff4343; /* Roter linker Rand */
 }
 
+/* Container für Portfolio-Zeilen-Informationen */
 .portfolio-row__info {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 12px; /* Abstand zwischen Info-Bereichen */
 }
 
+/* Header-Bereich einer Portfolio-Zeile (Name und Quick-Sell Button) */
 .portfolio-row__header {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Name links, Button rechts */
     align-items: center;
     margin-bottom: 8px;
 }
 
+/* Aktienname in Portfolio-Zeile */
 .portfolio-row__name {
     font-size: 1.25rem;
-    font-weight: 600;
+    font-weight: 600; /* Halbfett */
     color: var(--text);
 }
 
+/* Quick-Sell Button für schnellen Verkauf */
 .portfolio-row__quick-sell {
     background: var(--primary);
     color: white;
@@ -669,31 +718,36 @@ table th, table td {
     border-radius: var(--radius);
     cursor: pointer;
     font-size: 0.9rem;
-    transition: background 0.2s;
+    transition: background 0.2s; /* Sanfter Hover-Effekt */
 }
 
+/* Hover-Effekt für Quick-Sell Button */
 .portfolio-row__quick-sell:hover {
-    background: var(--primary-hover);
+    background: var(--primary-hover); /* Dunkleres Orange */
 }
 
+/* Grid für Detail-Informationen (Preis, Anzahl, Gewinn/Verlust) */
 .portfolio-row__details {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Flexible Spalten, mind. 200px */
+    gap: 12px; /* Abstand zwischen Detail-Feldern */
 }
 
+/* Einzelnes Detail-Feld (Label + Wert) */
 .portfolio-row__detail {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 4px; /* Abstand zwischen Label und Wert */
 }
 
+/* Label für Portfolio-Details */
 .portfolio-row__label {
     font-size: 0.85rem;
-    color: var(--text-light);
+    color: var(--text-light); /* Heller Text für Labels */
     font-weight: 500;
 }
 
+/* Werte in Portfolio-Details (Preis, Anzahl, Gewinn/Verlust) */
 .portfolio-row__price,
 .portfolio-row__owning,
 .portfolio-row__profit {
@@ -702,43 +756,46 @@ table th, table td {
     font-weight: 500;
 }
 
+/* Gewinn-Zeile: Grüne Farbe für Gewinn-Wert */
 .portfolio-row--profit .portfolio-row__profit {
-    color: #006600;
-    font-weight: 600;
+    color: #006600; /* Dunkelgrün */
+    font-weight: 600; /* Etwas fetter */
 }
 
+/* Verlust-Zeile: Rote Farbe für Verlust-Wert */
 .portfolio-row--loss .portfolio-row__profit {
-    color: #cc0000;
-    font-weight: 600;
+    color: #cc0000; /* Rot */
+    font-weight: 600; /* Etwas fetter */
 }
 
-/* Trade Section Styling */
+/* Eingabefelder in der Trade-Section (Kaufen/Verkaufen) */
 .portfolio-trade-section select,
 .portfolio-trade-section input[type="number"] {
-    width: 100%;
+    width: 100%; /* Volle Breite */
     padding: 10px;
     border-radius: var(--radius);
     border: 1px solid var(--border);
     font-size: 1rem;
-    font-family: inherit;
+    font-family: inherit; /* Gleiche Schriftart wie Seite */
 }
 
+/* Focus-Zustand für Trade-Eingabefelder */
 .portfolio-trade-section select:focus,
 .portfolio-trade-section input[type="number"]:focus {
     outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(255, 98, 0, 0.1);
+    border-color: var(--primary); /* Orange Rahmen beim Fokussieren */
+    box-shadow: 0 0 0 3px rgba(255, 98, 0, 0.1); /* Heller orange Glow-Effekt */
 }
 
-/* Nachrichtenliste Container */
+/* Container für die Liste aller Nachrichten */
 .message-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 12px; /* Abstand zwischen Nachrichten */
     margin-top: 16px;
-    max-height: 600px;
-    overflow-y: auto;
-    padding-right: 4px;
+    max-height: 600px; /* Maximale Höhe mit Scrollfunktion */
+    overflow-y: auto; /* Vertikales Scrollen bei Bedarf */
+    padding-right: 4px; /* Platz für Scrollbar */
 }
 
 /* Scrollbar Styling für Nachrichtenliste */
@@ -760,26 +817,27 @@ table th, table td {
     background: var(--text-light);
 }
 
-/* Nachrichten-Container */
+/* Container für einzelne Nachricht */
 .messages__div-area-list__container__row-template {
     display: flex;
     width: 100%;
-    margin-bottom: 12px;
+    margin-bottom: 12px; /* Abstand zur nächsten Nachricht */
 }
 
-/* Nachrichten-Bubble */
+/* Nachrichten-Bubble (Karten-ähnliches Design) */
 .message-bubble {
     background: var(--card-bg);
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 12px 16px;
-    box-shadow: 0 1px 3px var(--shadow);
+    box-shadow: 0 1px 3px var(--shadow); /* Leichter Schatten */
     width: 100%;
-    transition: all 0.2s;
+    transition: all 0.2s; /* Sanfte Übergänge */
 }
 
+/* Hover-Effekt für Nachrichten-Bubbles */
 .message-bubble:hover {
-    box-shadow: 0 2px 6px var(--shadow);
+    box-shadow: 0 2px 6px var(--shadow); /* Stärkerer Schatten beim Hover */
 }
 
 /* Message Header (Sender und Datum) */
@@ -791,28 +849,31 @@ table th, table td {
     gap: 12px;
 }
 
+/* Absendername in Nachricht */
 .messages__div-area-list__container__row-template__display-sender {
-    font-weight: 600;
+    font-weight: 600; /* Halbfett */
     color: var(--text);
     font-size: 0.95rem;
 }
 
+/* Datum/Zeit in Nachricht */
 .messages__div-area-list__container__row-template__display-date {
     font-size: 0.85rem;
-    color: var(--text-light);
-    white-space: nowrap;
+    color: var(--text-light); /* Heller Text */
+    white-space: nowrap; /* Kein Zeilenumbruch */
 }
 
-/* Message Content */
+/* Nachrichtentext-Content */
 .message-content {
     color: var(--text);
-    line-height: 1.5;
-    word-wrap: break-word;
+    line-height: 1.5; /* Bessere Lesbarkeit durch Zeilenhöhe */
+    word-wrap: break-word; /* Längere Wörter werden umgebrochen */
 }
 
+/* Text-Inhalt einer Nachricht */
 .messages__div-area-list__container__row-template__display-text {
     display: block;
-    white-space: pre-wrap;
+    white-space: pre-wrap; /* Behält Zeilenumbrüche bei */
 }
 
 /* Eingehende Nachrichten (empfangen, grünlich) */
@@ -850,19 +911,21 @@ table th, table td {
     height: var(--chart-card-total-height);
 }
 
+/* Wrapper für Chart und Y-Achse */
 .chart-wrapper {
     display: flex;
-    gap: 8px;
+    gap: 8px; /* Abstand zwischen Chart und Y-Achse */
     margin-top: 16px;
     height: var(--chart-height); /* Chart-Höhe: Änderbar über --chart-height Variable */
     overflow: hidden; /* Verhindert Scrollen im Chart-Wrapper */
     flex-shrink: 0; /* Verhindert, dass der Chart schrumpft */
 }
 
+/* Y-Achse des Charts (Preis-Skala) */
 .chart-y-axis {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-between; /* Zahlen gleichmäßig verteilt */
     min-width: 70px; /* Etwas breiter für bessere Lesbarkeit */
     padding-left: 8px;
     padding-top: 10px; /* Padding oben, damit erste Zahl nicht abgeschnitten wird */
@@ -870,52 +933,58 @@ table th, table td {
     font-size: 0.85rem;
     color: var(--text-light);
     text-align: left;
-    order: 2; /* Position on the right side */
+    order: 2; /* Position rechts vom Chart */
 }
 
+/* Einzelne Markierung auf der Y-Achse */
 .chart-y-axis__tick {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    height: 1px;
+    height: 1px; /* Minimalhöhe für Flexbox */
     position: relative;
 }
 
+/* Kleine Linie links von der Y-Achsen-Markierung */
 .chart-y-axis__tick::after {
     content: '';
     position: absolute;
     left: -8px;
-    width: 4px;
+    width: 4px; /* Breite der Trennlinie */
     height: 1px;
-    background-color: var(--border);
+    background-color: var(--border); /* Graue Trennlinie */
 }
 
+/* Wrapper für Chart-Container und X-Achse */
 .chart-container-wrapper {
-    flex: 1;
+    flex: 1; /* Nimmt verfügbaren Platz ein */
     display: flex;
     flex-direction: column;
-    order: 1; /* Position on the left side */
+    order: 1; /* Position links von der Y-Achse */
 }
 
+/* Container für den eigentlichen Chart (Canvas) */
 .chart-container {
-    flex: 1;
+    flex: 1; /* Nimmt verfügbare Höhe ein */
     position: relative;
     background: var(--card-bg);
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    overflow: hidden;
-    min-height: 0; /* Wichtig für Flexbox */
+    overflow: hidden; /* Verhindert Überlauf des Charts */
+    min-height: 0; /* Wichtig für Flexbox (verhindert Schrumpfprobleme) */
 }
 
+/* Canvas-Element für die Chart-Linienzeichnung */
 .chart__display__line-graph-canvas {
-    width: 100%;
-    height: 100%;
-    display: block;
+    width: 100%; /* Volle Breite des Containers */
+    height: 100%; /* Volle Höhe des Containers */
+    display: block; /* Block-Element für korrektes Rendering */
 }
 
+/* X-Achse des Charts (Zeit-Skala) */
 .chart-x-axis {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; /* Zeitpunkte gleichmäßig verteilt */
     padding-top: 8px;
     font-size: 0.85rem;
     color: var(--text-light);
@@ -924,37 +993,41 @@ table th, table td {
     width: 100%; /* Nimmt die volle Breite des Container-Wrappers ein */
 }
 
+/* Einzelne Markierung auf der X-Achse */
 .chart-x-axis__tick {
-    flex: 1;
+    flex: 1; /* Gleiche Breite für alle Markierungen */
     text-align: center;
     position: relative;
 }
 
+/* Kleine Linie über der X-Achsen-Markierung */
 .chart-x-axis__tick::before {
     content: '';
     position: absolute;
-    top: -8px;
+    top: -8px; /* Position oberhalb der Achse */
     left: 50%;
-    transform: translateX(-50%);
-    width: 1px;
+    transform: translateX(-50%); /* Zentriert */
+    width: 1px; /* Dünne Trennlinie */
     height: 4px;
-    background-color: var(--border);
+    background-color: var(--border); /* Graue Trennlinie */
 }
 
+/* Select-Dropdown für Chart-Aktienauswahl */
 .chart-select {
-    width: 100%;
+    width: 100%; /* Volle Breite */
     padding: 10px;
     border-radius: var(--radius);
     border: 1px solid var(--border);
     font-size: 1rem;
-    font-family: inherit;
+    font-family: inherit; /* Gleiche Schriftart wie Seite */
     background: var(--card-bg);
 }
 
+/* Focus-Zustand für Chart-Select */
 .chart-select:focus {
     outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(255, 98, 0, 0.1);
+    border-color: var(--primary); /* Orange Rahmen beim Fokussieren */
+    box-shadow: 0 0 0 3px rgba(255, 98, 0, 0.1); /* Heller orange Glow-Effekt */
 }
 
 /* Chart News Section */
@@ -975,69 +1048,143 @@ table th, table td {
     max-height: calc(8 * 80px - 24px); /* 8 Einträge * 60px + 20px Padding für vollständige Sichtbarkeit */
 }
 
+/* Nachricht, wenn noch keine News vorhanden sind */
 .chart-news-empty {
     text-align: center;
     color: var(--text-light);
     padding: 32px;
-    font-style: italic;
+    font-style: italic; /* Kursiv für betonten Hinweis */
 }
 
+/* Einzelner News-Eintrag im Chart */
 .chart__display__list-news__row-template {
     padding: 12px;
-    margin-bottom: 8px;
+    margin-bottom: 8px; /* Abstand zur nächsten News */
     border-radius: var(--radius);
     border: 1px solid var(--border);
     background: var(--card-bg);
 }
 
+/* Versteckt HR-Tags in News-Einträgen */
 .chart__display__list-news__row-template hr {
     display: none;
 }
 
+/* Zeitstempel in Chart-News-Einträgen */
 .chart__display__list-news__row-template__display-time {
     display: block;
     font-size: 0.85rem;
-    color: var(--text-light);
-    margin-bottom: 4px;
+    color: var(--text-light); /* Heller Text */
+    margin-bottom: 4px; /* Abstand zum Text */
 }
 
+/* Text-Inhalt in Chart-News-Einträgen */
 .chart__display__list-news__row-template__display-text {
     display: block;
     color: var(--text);
 }
 
+/* Nachrichten von anderen Spielern (normal) */
 .chart__display__list-news__row-template__foreign {
     font-weight: normal;
 }
 
+/* Nachrichten vom eigenen Spieler (hervorgehoben) */
 .chart__display__list-news__row-template__self {
-    font-weight: bold;
-    border-left: 3px solid var(--primary);
+    font-weight: bold; /* Fetter Text */
+    border-left: 3px solid var(--primary); /* Orange linker Rand */
 }
 
+/* Verkaufs-Transaktionen (grün) */
 .chart__display__list-news__row-template__sell {
-    background-color: rgba(99, 255, 99, 0.15);
-    border-left: 3px solid #63ff63;
+    background-color: rgba(99, 255, 99, 0.15); /* Heller grüner Hintergrund */
+    border-left: 3px solid #63ff63; /* Grüner linker Rand */
 }
 
+/* Kauf-Transaktionen (rot) */
 .chart__display__list-news__row-template__buy {
-    background-color: rgba(255, 67, 67, 0.15);
-    border-left: 3px solid #ff4343;
+    background-color: rgba(255, 67, 67, 0.15); /* Heller roter Hintergrund */
+    border-left: 3px solid #ff4343; /* Roter linker Rand */
 }
 
-.alert{
-    width: 100%;
-    height: 100%;
-    border: 0;
-    background: none;
-    align-content: center;
-    justify-content: center;
-    text-align: center;
+/* ------------------------------------------------------------
+   ERROR-DIALOG / ALERT-DIALOG
+   Styling für modale Fehlermeldungen
+------------------------------------------------------------ */
 
-    .alert-main {
-        background-color: var(--card-bg);
-        border: 1px solid var(--border);
-        padding: 16px;
-        border-radius: var(--radius);
-    }
+/* Dialog-Container: Zentriert auf dem Bildschirm */
+.alert{
+    width: 90%; /* 90% der Bildschirmbreite (responsive) */
+    max-width: 500px; /* Maximale Breite */
+    border: 0; /* Kein Standard-Dialog-Rahmen */
+    background: none; /* Transparenter Hintergrund */
+    padding: 0;
+    border-radius: var(--radius);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* Schatten für Tiefeneffekt */
+    position: fixed; /* Fixiert auf Bildschirm */
+    top: 50%; /* Vertikale Mitte */
+    left: 50%; /* Horizontale Mitte */
+    transform: translate(-50%, -50%); /* Zentriert die Card perfekt */
+    margin: 0;
+}
+
+/* Backdrop/Overlay für modales Verhalten */
+.alert::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+}
+
+.alert-main {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 24px;
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    text-align: left;
+}
+
+/* Fehler-Überschrift in Alert-Dialog (rot) */
+.alert-main h2 {
+    margin: 0;
+    color: #cc0000; /* Rot für Fehlermeldungen */
+    font-size: 1.5rem;
+    font-weight: 600;
+    border-bottom: 2px solid #cc0000; /* Roter Unterstrich */
+    padding-bottom: 8px; /* Abstand zum Rand */
+}
+
+/* Fehler-Textkörper in Alert-Dialog */
+.alert-body {
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1.5; /* Bessere Lesbarkeit */
+    margin: 0;
+}
+
+/* Schließen-Button im Alert-Dialog */
+.alert-dismiss {
+    align-self: flex-end; /* Rechts ausgerichtet */
+    margin-top: 8px;
+    padding: 10px 20px;
+    background: var(--primary); /* Orange Hintergrund */
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background 0.2s; /* Sanfter Hover-Effekt */
+}
+
+/* Hover-Effekt für Schließen-Button */
+.alert-dismiss:hover {
+    background: var(--primary-hover); /* Dunkleres Orange */
+}
+
+/* Focus-Zustand für Schließen-Button (Accessibility) */
+.alert-dismiss:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 98, 0, 0.3); /* Orange Glow für Keyboard-Navigation */
 }

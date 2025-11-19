@@ -357,9 +357,6 @@ export async function sendMessage(recipient, text)
                 else alertCustom(`Could not send message: ${response.statusText} (${response.status})`);
             }
 
-            // Update all dynamic ui immediately to make sure all changes are visible
-            uiUpdateDynamic();
-
         }catch (exception)
         {
             alertCustom("Sending the message failed: " + exception.message);
