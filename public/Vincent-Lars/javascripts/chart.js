@@ -154,14 +154,15 @@ async function drawLineGraph()
             let labelY = toCanvasY(lastPoint.y);
 
             // Keep label inside canvas boundaries
-            if (labelX + 115 > canvas.width) labelX = canvas.width - 115; // adjust right edge
+            const text = line.label + " " + line.points.at(-1).y.toFixed(2) + " €";
+            if (labelX + 115 > canvas.width) labelX = canvas.width - (7.5 * text.length); // adjust right edge
             if (labelY - 7 < 0) labelY = 7; // top padding
             if (labelY + 7 > canvas.height) labelY = canvas.height - 7; // bottom padding
 
             ctx.fillStyle = line.color;
             ctx.font = "14px Arial";
             ctx.textBaseline = "middle";
-            ctx.fillText(line.label, labelX, labelY);
+            ctx.fillText(text, labelX, labelY);
         }
     });
 
