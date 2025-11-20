@@ -20,10 +20,11 @@ async function init ()
     setGreetingMessage()
     startContentLoop();
 
-    // For testing only
+    /* For testing only
     document.getElementById("restart").addEventListener("click", () => {
         window.location.replace("../supervisor/publicapi/restart-lab-web-a-1");
     });
+    */
 
 }
 
