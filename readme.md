@@ -6,3 +6,5 @@ Full build can be viewed here: https://my-public-wlan-not-at-home.selfhost.eu/la
 
 
 Hallo Welt!
+
+ - Jenkins test
