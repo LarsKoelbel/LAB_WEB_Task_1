@@ -63,8 +63,7 @@ async function loadStockTrendsFromLocalStorage() {
         const timestamp = Date.now();
         for (const [k, v] of trendsArray) {
             const value = v.filter(x => (timestamp - x.x) < (DYNAMIC_UI_UPDATE_INTERVAL_IN_MS * MAX_STOCK_TREND_HISTORY_LENGTH));
-            GLOBAL_STOCK_TRENDS.set(k, v);
-            console.log(value)
+            GLOBAL_STOCK_TRENDS.set(k, value);
         }
         console.log("Engine loaded local storage data")
     }else
